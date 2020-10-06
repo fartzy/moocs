@@ -106,10 +106,14 @@ def perceptron_single_step_update(feature_vector, label, current_theta, current_
     # guess = dotp * label
     # print(feature_vector)
     # print(current_theta)
-    if ((np.dot(feature_vector, current_theta) + current_theta_0) * label) <= 0:
-        current_theta = current_theta + feature_vector * label
-        current_theta_0 = label + current_theta_0
-    return (current_theta, current_theta_0)
+    if label * (np.dot(current_theta, feature_vector) + current_theta_0) <= 0:
+        print("current_theta_0 : " + str(type(current_theta_0)))
+        print("label : " + str(type(label)))
+        print("feature_vector : " + str(type(feature_vector)))
+        current_theta += label * feature_vector
+        current_theta_0 += [label]
+
+    return current_theta, current_theta_0  # default output is tuple (  ,  )
 
 
 # pragma: coderesponse end
@@ -186,20 +190,33 @@ def average_perceptron(feature_matrix, labels, T):
     Hint: It is difficult to keep a running average; however, it is simple to
     find a sum and divide.
     """
-    current_theta = np.zeros(len(feature_matrix[0]))
-    current_theta_0 = 0
-    n = len(feature_matrix[0])
+    [k, m] = np.shape(feature_matrix)
+    theta = np.zeros(m)  # row vector in list
+    theta_0 = [0]
+
+    # dummy variable, beware not bind to theta theta_0
+    a = np.zeros(m)
+    b = [0]
+
+    # in case alg does not converge so assign an iterating limit T
     for t in range(T):
+
+        # shuffle the data points order for alg
         for i in get_order(feature_matrix.shape[0]):
 
-            print(feature_matrix[i])
-            print(labels[i])
-            print(i)
-            current_theta, current_theta_0 = perceptron_single_step_update(
-                feature_matrix[i], labels[i], current_theta, current_theta_0
+            # Your code here
+            [theta, theta_0] = perceptron_single_step_update(
+                feature_matrix[i], labels[i], theta, theta_0
             )
 
-    return (1 / T * current_theta), (1 / T * current_theta_0)
+            # immediate bind by lambda function
+            theta = (lambda x: x)(theta)
+            theta_0 = (lambda x: x)(theta_0)
+
+            a += theta
+            b += theta_0
+
+    return a / k / T, b / k / T
 
 
 # pragma: coderesponse end
@@ -352,15 +369,18 @@ def classifier_accuracy(
     trained classifier on the training data and the second element is the
     accuracy of the trained classifier on the validation data.
     """
-    classification_vector = np.array([])
-    for i in range(feature_matrix.shape[0]):
-        if np.dot(theta, feature_matrix[i]) + theta_0 > 0:
-            results = 1
-            classification_vector = np.append(classification_vector, results)
-        else:
-            results = -1
-            classification_vector = np.append(classification_vector, results)
-    return classification_vector
+    # Your code here
+    T_class = classifier(train_feature_matrix, train_labels, **kwargs)
+    T_judge = classify(train_feature_matrix, T_class[0], T_class[1])
+
+    T_acc = accuracy(T_judge, train_labels)
+
+    # for validation, you should not train again, just apply the classifier from the train set
+    V_judge = classify(val_feature_matrix, T_class[0], T_class[1])
+
+    V_acc = accuracy(V_judge, val_labels)
+
+    return T_acc, V_acc
 
 
 # pragma: coderesponse end

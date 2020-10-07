@@ -102,16 +102,16 @@ def perceptron_single_step_update(feature_vector, label, current_theta, current_
     completed.
     """
     # Your code here
-    # dotp = ( np.dot(feature_vector, current_theta) + current_theta_0 )
+    # dotp = np.dot(feature_vector, current_theta) + current_theta_0
     # guess = dotp * label
     # print(feature_vector)
     # print(current_theta)
     if label * (np.dot(current_theta, feature_vector) + current_theta_0) <= 0:
-        print("current_theta_0 : " + str(type(current_theta_0)))
-        print("label : " + str(type(label)))
-        print("feature_vector : " + str(type(feature_vector)))
+        # print("current_theta_0 : " + str(type(current_theta_0)))
+        # print("label : " + str(type(label)))
+        # print("feature_vector : " + str(type(feature_vector)))
         current_theta += label * feature_vector
-        current_theta_0 += [label]
+        current_theta_0 += label
 
     return current_theta, current_theta_0  # default output is tuple (  ,  )
 
@@ -378,6 +378,7 @@ def classifier_accuracy(
     # for validation, you should not train again, just apply the classifier from the train set
     V_judge = classify(val_feature_matrix, T_class[0], T_class[1])
 
+    # V_acc = accuracy(V_judge, val_labels)
     V_acc = accuracy(V_judge, val_labels)
 
     return T_acc, V_acc

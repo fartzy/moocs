@@ -1,4 +1,0 @@
-import clc
-
-print("Hi")
-

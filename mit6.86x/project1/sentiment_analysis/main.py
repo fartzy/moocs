@@ -95,7 +95,7 @@ print(
     )
 )
 
-# fix values for L and T while tuning Pegasos T and L, respective
+# # fix values for L and T while tuning Pegasos T and L, respective
 fix_L = 0.01
 peg_tune_results_T = utils.tune_pegasos_T(fix_L, Ts, *data)
 print("Pegasos valid: tune T", list(zip(Ts, peg_tune_results_T[1])))
@@ -114,10 +114,10 @@ print(
     )
 )
 
-utils.plot_tune_results("Perceptron", "T", Ts, *pct_tune_results)
-utils.plot_tune_results("Avg Perceptron", "T", Ts, *avg_pct_tune_results)
-utils.plot_tune_results("Pegasos", "T", Ts, *peg_tune_results_T)
-utils.plot_tune_results("Pegasos", "L", Ls, *peg_tune_results_L)
+# utils.plot_tune_results("Perceptron", "T", Ts, *pct_tune_results)
+# utils.plot_tune_results("Avg Perceptron", "T", Ts, *avg_pct_tune_results)
+# utils.plot_tune_results("Pegasos", "T", Ts, *peg_tune_results_T)
+# utils.plot_tune_results("Pegasos", "L", Ls, *peg_tune_results_L)
 
 # -------------------------------------------------------------------------------
 # Use the best method (perceptron, average perceptron or Pegasos) along with

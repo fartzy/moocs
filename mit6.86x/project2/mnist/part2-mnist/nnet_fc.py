@@ -38,13 +38,16 @@ def main():
 
     #################################
     ## Model specification TODO
+    N, D_in, H, D_out = batch_size, 784, 128, 10
+
     model = nn.Sequential(
-              nn.Linear(784, 10),
+              nn.Linear(D_in, H),
               nn.ReLU(),
-              nn.Linear(10, 10),
+              nn.Linear(H, D_out)
             )
     lr=0.1
     momentum=0
+    leaky_relu_active = False
     ##################################
 
     train_model(train_batches, dev_batches, model, lr=lr, momentum=momentum)
@@ -52,7 +55,9 @@ def main():
     ## Evaluate the model on test data
     loss, accuracy = run_epoch(test_batches, model.eval(), None)
 
-    print ("Loss on test set:"  + str(loss) + " Accuracy on test set: " + str(accuracy))
+    print("Batch size: {}; Learning Rate: {}; Momentum: {}; LeakyReLU: {}; Hidden Dimension: {}".
+          format(batch_size, lr, momentum, leaky_relu_active, H))
+    print("Loss on test set:"  + str(loss) + " Accuracy on test set: " + str(accuracy))
 
 
 if __name__ == '__main__':

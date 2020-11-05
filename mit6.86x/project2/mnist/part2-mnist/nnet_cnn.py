@@ -62,3 +62,31 @@ if __name__ == '__main__':
     np.random.seed(12321)  # for reproducibility
     torch.manual_seed(12321)
     main()
+
+# model = nn.Sequential(
+#           nn.Conv2d(1, 32, (3, 3)),
+#           nn.ReLU(),
+#           nn.MaxPool2d((2, 2)),
+#           nn.Conv2d(32, 64, (3, 3)),
+#           nn.ReLU(),
+#           nn.MaxPool2d((2, 2)),
+#           Flatten(),
+#           nn.Linear(1600, 128),
+#           nn.Dropout(0.5),
+#           nn.Linear(128,10),
+#         )
+
+#  def predict(self, x1, x2):
+
+#         input_values = np.matrix([[x1],[x2]]) # 2 by 1
+        
+#         # Compute output for a single input(should be same as the forward propagation in training)
+        
+#         hidden_layer_weighted_input = self.input_to_hidden_weights * input_values + self.biases  
+        
+#         hidden_layer_activation = np.vectorize(rectified_linear_unit)(hidden_layer_weighted_input) 
+        
+#         output = self.hidden_to_output_weights * hidden_layer_activation  
+#         active_out = output_layer_activation(output) 
+        
+#         return active_out.item()

@@ -460,5 +460,20 @@ def accuracy(preds, targets):
     """
     return (preds == targets).mean()
 
+if __name__ == '__main__':
+    # pragma: coderesponse end
+    dataset = X = np.array([[0,2],
+        [2,0],
+        [3,0],
+        [0,2],
+        [2,2],
+        [5,1],
+        [5,2],
+        [2,4],
+        [4,4],
+        [5,5]])
 
-# pragma: coderesponse end
+    labels = [-1,-1,-1,-1,-1,1,1,1,1,1]
+
+
+    print(perceptron(dataset, labels, 9))

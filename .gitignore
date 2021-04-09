@@ -136,3 +136,12 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# java class files 
+*.class
+
+# jvm packaged files 
+*.jar 
+
+# build directories 
+*/target/*
